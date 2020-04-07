@@ -101,6 +101,7 @@ export const Instagram = (props: PropsType) => {
           numberOfBullets={isCarousel ? numberOfItems : null}
           itemIndexCurrentlyFocused={carouselCurrentIndex}
           darkMode={darkMode}
+          id={id}
         />
         <Text style={styles.like}>
           {getLikeTranslation(

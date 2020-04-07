@@ -1,6 +1,11 @@
-import React from 'react';
-import Video from 'react-native-video';
-import {TouchableWithoutFeedback, View, StyleSheet, Image} from 'react-native';
+import React from "react";
+import Video from "react-native-video";
+import {
+  TouchableWithoutFeedback,
+  View,
+  StyleSheet,
+  Image,
+} from "react-native";
 
 interface PropsType {
   source: string;
@@ -10,41 +15,40 @@ interface PropsType {
 }
 
 export const InstagramVideo = (props: PropsType) => {
-  const {source, aspectRatio, poster, hasFocus} = props;
-  console.log(hasFocus);
+  const { source, aspectRatio, poster, hasFocus } = props;
   const [pauseNumber, setPauseNumber] = React.useState(0);
   const isPaused = pauseNumber % 2 === 0;
   const hasNotUnpausedYet = pauseNumber === 0;
   return (
     <TouchableWithoutFeedback onPress={() => setPauseNumber(pauseNumber + 1)}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <Video
-          source={{uri: source}}
+          source={{ uri: source }}
           style={{
             flex: 1,
             aspectRatio,
           }}
           paused={isPaused || !hasFocus}
-          resizeMode={'contain'}
+          resizeMode={"contain"}
           repeat
         />
         <View style={styles.overlay}>
           <Image
             style={{
               ...StyleSheet.absoluteFillObject,
-              display: hasNotUnpausedYet ? 'flex' : 'none',
+              opacity: hasNotUnpausedYet ? 1 : 0,
             }}
-            source={{uri: poster}}
+            source={{ uri: poster }}
           />
         </View>
         <View style={styles.playContainer}>
           <Image
             style={{
-              display: isPaused ? 'flex' : 'none',
+              opacity: isPaused ? 1 : 0,
               width: 50,
               height: 50,
             }}
-            source={require('./assets/play.png')}
+            source={require("./assets/play.png")}
           />
         </View>
       </View>
@@ -55,12 +59,12 @@ export const InstagramVideo = (props: PropsType) => {
 const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   playContainer: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
