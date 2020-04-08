@@ -11,16 +11,21 @@
     "url": "git://github.com/PierreCapo/react-native-socials.git"
   },
   "dependencies": {
+    "@babel/runtime": "^7.9.2",
     "@types/react-native": "^0.62.1",
     "@types/react-native-video": "^5.0.1",
     "date-fns": "^2.11.1",
     "tslib": "^1.11.1"
   },
+  "devDependencies": {},
+  "peerDependencies": {
+    "react-native": "*",
+    "react": "*"
+  },
   "bugs": {
     "url": "https://github.com/PierreCapo/react-native-socials/issues"
   },
   "homepage": "https://github.com/PierreCapo/react-native-socials#readme",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
