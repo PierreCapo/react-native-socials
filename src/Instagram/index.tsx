@@ -36,7 +36,6 @@ export const Instagram = (props: PropsType) => {
   }
   const numberOfItems = instagramPostData.content.length;
   const isCarousel = numberOfItems > 1;
-  console.log("hello");
   return (
     <View style={styles.container}>
       <View style={styles.header}>

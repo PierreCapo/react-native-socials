@@ -18,9 +18,9 @@ It is also needed to add `react-native-video` in your project because social com
 import {Instagram} from "react-native-socials";
 ```
 
-| Light | Dark |
-| --- | --- |
-|<image src="https://github.com/PierreCapo/react-native-socials/raw/master/screenshot_instagram.png" />|<image src="https://github.com/PierreCapo/react-native-socials/raw/master/screenshot_instagram_dark.png" />|
+| Light                                                                                                  | Dark                                                                                                        |
+| ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| <image src="https://github.com/PierreCapo/react-native-socials/raw/master/screenshot_instagram.png" /> | <image src="https://github.com/PierreCapo/react-native-socials/raw/master/screenshot_instagram_dark.png" /> |
 
 Props:
 
@@ -28,4 +28,18 @@ Props:
 - `darkMode`: default to `false`
 - `language`: "en" | "de" | "fr" | "es" | "pt" | "it" | "ru"
 
-_WIP_
+##### Twitter
+
+```
+import {Twitter} from "react-native-socials";
+```
+
+Props:
+
+- `id`: Twitter post id
+- `language`: "en" | "de" | "fr" | "es" | "pt" | "it" | "ru"
+- `consumerKey`: OAuth 1.0 Twitter key that is granted when you [register your app on Twitter Portal](https://developer.twitter.com/en/docs/basics/authentication/oauth-1-0a)
+- `consumerSecret`: OAuth 1.0 Twitter secret that is granted when you [register your app on Twitter Portal](https://developer.twitter.com/en/docs/basics/authentication/oauth-1-0a)
+- `onHashTagPress?`: Overrides default behavior when pressing an hashtag in a Tweet
+- `onUserMentionPress?`: Overrides default behavior when pressing a user mention in a Tweet
+- `onLinkPress?`: Overrides default behavior when pressing a user link in a Tweet
