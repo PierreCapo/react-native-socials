@@ -3,7 +3,7 @@
     "target": "es5",
     "module": "esnext",
     "outDir": "./dist",
-    "sourceMap": true,
+    "sourceMap": false,
     "experimentalDecorators": true,
     "jsx": "react-native",
     "lib": ["esnext"],

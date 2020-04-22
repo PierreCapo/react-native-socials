@@ -7,6 +7,7 @@ import { formatLikeNumber, getFormattedTimeByLanguage } from "./utils";
 import { ImageGallery } from "./ImageGallery";
 import { TwitterText } from "./TwitterText";
 import { TwitterVideo } from "./Video";
+import { LinkPreview } from "./LinkPreview";
 
 interface PropsType {
   id: string;
@@ -74,6 +75,13 @@ export const Twitter = (props: PropsType) => {
             <View style={styles.embedContainer(cornerRadius)}>
               <ImageGallery medias={data.media} />
             </View>
+          ) : data?.urlList?.[0] && !data?.isQuote ? (
+            <View style={styles.embedContainer(cornerRadius)}>
+              <LinkPreview
+                url={data?.urlList?.[0]?.expanded_url}
+                onLinkPress={onLinkPress}
+              />
+            </View>
           ) : null}
           {data?.isQuote ? (
             <View style={styles.embedContainer(cornerRadius)}>
@@ -137,7 +145,7 @@ export const Twitter = (props: PropsType) => {
 };
 
 Twitter.defaultProps = {
-  cornerRadius: "big",
+  cornerRadius: "small",
 };
 
 const styles = StyleSheet.create({
@@ -203,7 +211,7 @@ const styles = StyleSheet.create({
   // @ts-ignore wrong react-native style
   embedContainer: (cornerRadius: "big" | "small") => ({
     borderColor: "rgb(204, 214, 221)",
-    borderWidth: 1,
+    borderWidth: 0.7,
     borderRadius: cornerRadius === "big" ? 12 : 4,
     marginTop: 10,
     overflow: "hidden",

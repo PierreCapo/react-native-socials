@@ -15,8 +15,10 @@
     "@types/react-native": "^0.62.1",
     "@types/react-native-video": "^5.0.1",
     "date-fns": "^2.11.1",
+    "link-preview-js": "^2.0.1",
     "oauth-signature": "^1.5.0",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "yarn": "^1.22.4"
   },
   "devDependencies": {
     "tslib": "^1.11.1"
