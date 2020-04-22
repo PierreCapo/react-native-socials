@@ -43,3 +43,4 @@ Props:
 - `onHashTagPress?`: Overrides default behavior when pressing an hashtag in a Tweet
 - `onUserMentionPress?`: Overrides default behavior when pressing a user mention in a Tweet
 - `onLinkPress?`: Overrides default behavior when pressing a user link in a Tweet
+- `cornerRadius`: "big | "small". Set the corner radius for embeded contet (Quote / Videos / Photos)

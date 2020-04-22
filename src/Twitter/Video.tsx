@@ -26,7 +26,6 @@ export const TwitterVideo = (props: PropsType) => {
           style={{
             width: "100%",
             aspectRatio: aspectRatio,
-            borderRadius: 4,
           }}
           paused={isPaused}
           resizeMode={"contain"}
@@ -38,7 +37,6 @@ export const TwitterVideo = (props: PropsType) => {
               opacity: hasNotUnpausedYet ? 1 : 0,
               width: "100%",
               aspectRatio: aspectRatio,
-              borderRadius: 4,
             }}
             source={{ uri: poster }}
           />

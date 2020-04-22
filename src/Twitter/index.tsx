@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Image, StyleSheet, Text, Linking } from "react-native";
+import { View, Image, StyleSheet, Text } from "react-native";
 import { getPostData, ITwitterPost } from "./api";
-import Video from "react-native-video";
 import { parse, format } from "date-fns";
 import { Header, HeaderQuote } from "./Header";
 import { formatLikeNumber, getFormattedTimeByLanguage } from "./utils";
@@ -17,6 +16,7 @@ interface PropsType {
   onHashTagPress?: (hashtag: string) => void;
   onUserMentionPress?: (userMention: string) => void;
   onLinkPress?: (link: string) => void;
+  cornerRadius?: "small" | "big";
 }
 
 export const Twitter = (props: PropsType) => {
@@ -28,6 +28,7 @@ export const Twitter = (props: PropsType) => {
     onUserMentionPress,
     consumerKey,
     consumerSecret,
+    cornerRadius,
   } = props;
   const [data, setData] = React.useState<ITwitterPost | null>(null);
   React.useEffect(() => {
@@ -62,7 +63,7 @@ export const Twitter = (props: PropsType) => {
             </TwitterText>
           </View>
           {data?.media?.[0]?.type === "video" ? (
-            <View style={styles.embedContainer}>
+            <View style={styles.embedContainer(cornerRadius)}>
               <TwitterVideo
                 source={data.media[0].url}
                 aspectRatio={data.media[0].aspectRatio}
@@ -70,12 +71,12 @@ export const Twitter = (props: PropsType) => {
               />
             </View>
           ) : data?.media?.[0]?.type === "photo" ? (
-            <View style={styles.embedContainer}>
+            <View style={styles.embedContainer(cornerRadius)}>
               <ImageGallery medias={data.media} />
             </View>
           ) : null}
           {data?.isQuote ? (
-            <View style={styles.embedContainer}>
+            <View style={styles.embedContainer(cornerRadius)}>
               <View style={{ margin: 10 }}>
                 <HeaderQuote
                   isPosterVerified={data.quotedTweet.isPosterVerified}
@@ -89,10 +90,20 @@ export const Twitter = (props: PropsType) => {
                   userMentions={data.quotedTweet.userMentionList}
                   quoteUrlId={data.quotedTweet.quoteUrlId}
                   {...{ onHashTagPress, onLinkPress, onUserMentionPress }}
+                  styles={styles.quotedContentText}
                 >
                   {data.quotedTweet.textContent}
                 </TwitterText>
               </View>
+              {data?.quotedTweet?.media?.[0]?.type === "video" ? (
+                <TwitterVideo
+                  source={data.quotedTweet.media[0].url}
+                  aspectRatio={data.quotedTweet.media[0].aspectRatio}
+                  poster={data.quotedTweet.media[0].posterUrl}
+                />
+              ) : data?.quotedTweet?.media?.[0]?.type === "photo" ? (
+                <ImageGallery medias={data?.quotedTweet?.media} />
+              ) : null}
             </View>
           ) : null}
           <View style={styles.metadataRowContainer}>
@@ -123,6 +134,10 @@ export const Twitter = (props: PropsType) => {
       ) : null}
     </View>
   );
+};
+
+Twitter.defaultProps = {
+  cornerRadius: "big",
 };
 
 const styles = StyleSheet.create({
@@ -185,11 +200,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  embedContainer: {
+  // @ts-ignore wrong react-native style
+  embedContainer: (cornerRadius: "big" | "small") => ({
     borderColor: "rgb(204, 214, 221)",
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: cornerRadius === "big" ? 12 : 4,
     marginTop: 10,
     overflow: "hidden",
-  },
+  }),
 });

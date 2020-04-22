@@ -17,6 +17,7 @@ export const getPostData = async (
     .then((response) => response.json())
     .then((value) => adapter(value))
     .catch((error) => {
+      console.log(error);
       return null;
     });
   return result;
@@ -26,7 +27,7 @@ export const adapter = (data: TwitterPostApiResponse): ITwitterPost => {
   const response = {
     createdAt: data.created_at,
     id: data.id,
-    posterImageUrl: data.user.profile_image_url.replace("_normal", ""),
+    posterImageUrl: data.user.profile_image_url_https.replace("_normal", ""),
     posterDisplayName: data.user.name,
     posterUniqueName: data.user.screen_name,
     isPosterVerified: data.user.verified,
@@ -56,14 +57,14 @@ export const adapter = (data: TwitterPostApiResponse): ITwitterPost => {
           return {
             type: element?.type,
             aspectRatio: element.sizes.thumb.w / element.sizes.thumb.h,
-            url: element.media_url,
+            url: element.media_url_https,
             twitterShortlink: element?.url,
           };
         } else {
           return {
             type: element?.type,
             aspectRatio: element.sizes.small.w / element.sizes.small.h,
-            url: element.media_url,
+            url: element.media_url_https,
             twitterShortlink: element?.url,
           };
         }
@@ -72,7 +73,7 @@ export const adapter = (data: TwitterPostApiResponse): ITwitterPost => {
     }),
   };
 
-  response.media.forEach((element) => {
+  response?.media?.forEach((element) => {
     if (element === null) return;
     response.textContent = response.textContent.replace(
       element?.twitterShortlink,

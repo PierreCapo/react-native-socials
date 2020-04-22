@@ -60,3 +60,4 @@ buck-out/
 *.jsbundle
 
 dist/
+example/config.ts
