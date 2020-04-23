@@ -20,7 +20,7 @@ export const TwitterVideo = (props: PropsType) => {
   const hasNotUnpausedYet = pauseNumber === 0;
   return (
     <TouchableWithoutFeedback onPress={() => setPauseNumber(pauseNumber + 1)}>
-      <View style={{ flex: 1 }}>
+      <View>
         <Image
           // this image is when adding this content to a FlatList. It will allow when pausing and then scrolling and then coming back to not see the white background of the twitter content behind
           style={{

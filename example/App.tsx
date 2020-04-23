@@ -9,20 +9,26 @@
  */
 
 import React from 'react';
-import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
+import {SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
 import {Instagram, Twitter} from 'react-native-socials';
+import {credentials} from './config';
+
+const AuthTwitter = (props) => {
+  return (
+    <Twitter
+      {...props}
+      consumerKey={credentials.consumerKey}
+      consumerSecret={credentials.consumerSecret}
+    />
+  );
+};
 
 const App = () => {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <Instagram id={'B-b6f7_gooQ'} />
-          <Twitter id={'1251870993628434433'} language={'ru'} />
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <View style={{width: '100%', height: '100%', backgroundColor: 'red'}}>
+      <AuthTwitter id={'1251870993628434433'} language={'ru'} />
+      <AuthTwitter id={'1253348918441754625'} language={'ru'} />
+    </View>
   );
 };
 

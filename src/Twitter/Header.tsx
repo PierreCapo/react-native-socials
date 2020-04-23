@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    flex: 1,
     marginTop: 20,
   },
   profilePicture: {
