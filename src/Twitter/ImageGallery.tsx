@@ -36,7 +36,9 @@ const getContainerAspectRatio = (aspectRatios: number[]) => {
 
 export const ImageGallery = (props: PropsType) => {
   const { medias } = props;
+  const [isModalVisible, setModalVisible] = React.useState(false);
   const aspectRatios = medias.map((element) => element.aspectRatio);
+  const flatlistRef = React.useRef(null);
   return (
     <View
       style={{

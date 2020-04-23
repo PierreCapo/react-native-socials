@@ -1,10 +1,10 @@
 import React from "react";
-import { getLinkPreview } from "link-preview-js";
 import { View, Image, Text, TouchableOpacity, Linking } from "react-native";
+import { openGraphTool } from "./OpenGraphParser";
 
 interface PropsType {
   url: string;
-  onLinkPress: (string) => any;
+  onLinkPress: (value: string) => any;
 }
 
 const getDomain = (url: string) => {
@@ -19,13 +19,15 @@ export const LinkPreview = (props: PropsType) => {
   const [data, setData] = React.useState<{
     url: string;
     title?: string;
-    images: string[];
+    image?: string;
     description?: string;
   } | null>(null);
 
   React.useEffect(() => {
-    // @ts-ignore
-    getLinkPreview(url).then((response) => setData(response));
+    openGraphTool
+      .extractMeta(url)
+      // @ts-ignore
+      .then((response) => setData(response[0]));
   }, [setData]);
   if (!data) {
     return null;
@@ -38,9 +40,9 @@ export const LinkPreview = (props: PropsType) => {
       disabled={!onLinkPress}
     >
       <View>
-        {data?.images?.[0] ? (
+        {data?.image ? (
           <Image
-            source={{ uri: data?.images?.[0] }}
+            source={{ uri: data?.image }}
             style={{ width: "100%", aspectRatio: 600 / 314 }}
             resizeMode={"cover"}
           />
