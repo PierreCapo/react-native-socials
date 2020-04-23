@@ -1,11 +1,14 @@
 import React from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
+import { AppearanceTheme } from "./typings";
+import { getTheme } from "./theme";
 
 interface PropsType {
   posterImageUrl: string;
   posterDisplayName: string;
   posterUniqueName: string;
   isPosterVerified: boolean;
+  appearanceTheme: AppearanceTheme;
 }
 
 export const Header = (props: PropsType) => {
@@ -14,7 +17,10 @@ export const Header = (props: PropsType) => {
     posterDisplayName,
     posterUniqueName,
     isPosterVerified,
+    appearanceTheme,
   } = props;
+  const styles = evaluateTheme(appearanceTheme);
+
   return (
     <View style={styles.container}>
       <Image
@@ -74,6 +80,7 @@ interface HeaderQuotePropsType {
   posterUniqueName: string;
   posterImageUrl: string;
   posterDisplayName: string;
+  appearanceTheme: AppearanceTheme;
 }
 
 export const HeaderQuote = (props: HeaderQuotePropsType) => {
@@ -82,7 +89,9 @@ export const HeaderQuote = (props: HeaderQuotePropsType) => {
     posterUniqueName,
     posterImageUrl,
     posterDisplayName,
+    appearanceTheme,
   } = props;
+  const styles = evaluateTheme(appearanceTheme);
   return (
     <View
       style={{ flexDirection: "row", alignItems: "center", marginBottom: 4 }}
@@ -111,57 +120,59 @@ export const HeaderQuote = (props: HeaderQuotePropsType) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 20,
-  },
-  profilePicture: {
-    borderWidth: 1,
-    borderColor: "rgba(0, 0, 0, 0.08)",
-  },
-  profileBanner: {
-    flexDirection: "row",
-  },
-  displayNameText: {
-    color: "rgb(28, 32, 34)",
-    fontSize: 16,
-    fontWeight: "700",
-  },
-  quotedDisplayNameText: {
-    color: "rgb(28, 32, 34)",
-    fontSize: 14,
-    fontWeight: "700",
-  },
-  uniqueNameText: {
-    color: "rgb(105, 120, 130)",
-    fontSize: 14,
-    fontWeight: "400",
-  },
-  firstLine: {
-    marginLeft: 10,
-    justifyContent: "space-between",
-    flex: 1,
-  },
-  headerSeparator: {
-    height: 12,
-  },
-  mainContentText: {
-    color: "rgb(28, 32, 34)",
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  profilePictureBig: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-  },
-  profilePictureSmall: {
-    width: 18,
-    height: 18,
-    borderRadius: 8,
-    marginRight: 5,
-  },
-});
+const evaluateTheme = (appearance: "dark" | "light") => {
+  const colors = getTheme(appearance);
+  return StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginTop: 20,
+    },
+    profilePicture: {
+      borderWidth: 1,
+      borderColor: "rgba(0, 0, 0, 0.08)",
+    },
+    profileBanner: {
+      flexDirection: "row",
+    },
+    displayNameText: {
+      color: colors.mainTextColor,
+      fontSize: 16,
+      fontWeight: "700",
+    },
+    quotedDisplayNameText: {
+      color: colors.mainTextColor,
+      fontSize: 14,
+      fontWeight: "700",
+    },
+    uniqueNameText: {
+      color: colors.grey,
+      fontSize: 14,
+      fontWeight: "400",
+    },
+    firstLine: {
+      marginLeft: 10,
+      justifyContent: "space-between",
+      flex: 1,
+    },
+    headerSeparator: {
+      height: 12,
+    },
+    mainContentText: {
+      color: colors.mainTextColor,
+      fontSize: 16,
+      fontWeight: "500",
+    },
+    profilePictureBig: {
+      width: 42,
+      height: 42,
+      borderRadius: 21,
+    },
+    profilePictureSmall: {
+      width: 18,
+      height: 18,
+      borderRadius: 8,
+      marginRight: 5,
+    },
+  });
+};

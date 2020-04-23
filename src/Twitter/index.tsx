@@ -8,6 +8,8 @@ import { ImageGallery } from "./ImageGallery";
 import { TwitterText } from "./TwitterText";
 import { TwitterVideo } from "./Video";
 import { LinkPreview } from "./LinkPreview";
+import { AppearanceTheme } from "./typings";
+import { getTheme } from "./theme";
 
 interface PropsType {
   id: string;
@@ -18,6 +20,7 @@ interface PropsType {
   onUserMentionPress?: (userMention: string) => void;
   onLinkPress?: (link: string) => void;
   cornerRadius?: "small" | "big";
+  darkMode?: boolean;
 }
 
 export const Twitter = (props: PropsType) => {
@@ -30,7 +33,9 @@ export const Twitter = (props: PropsType) => {
     consumerKey,
     consumerSecret,
     cornerRadius,
+    darkMode,
   } = props;
+  const appearance = darkMode ? "dark" : "light";
   const [data, setData] = React.useState<ITwitterPost | null>(null);
   React.useEffect(() => {
     getPostData(id, consumerKey, consumerSecret).then((response) => {
@@ -40,6 +45,7 @@ export const Twitter = (props: PropsType) => {
   if (!data) {
     return null;
   }
+  const styles = evaluateTheme(appearance);
 
   return (
     <View style={styles.container}>
@@ -50,6 +56,7 @@ export const Twitter = (props: PropsType) => {
             posterDisplayName={data.posterDisplayName}
             posterUniqueName={data.posterUniqueName}
             isPosterVerified={data.isPosterVerified}
+            appearanceTheme={appearance}
           />
           <View style={styles.headerSeparator} />
           <View>
@@ -59,6 +66,7 @@ export const Twitter = (props: PropsType) => {
               hashtags={data.hashtagList}
               userMentions={data.userMentionList}
               quoteUrlId={data.quoteUrlId}
+              appearanceTheme={appearance}
             >
               {data.textContent}
             </TwitterText>
@@ -80,6 +88,7 @@ export const Twitter = (props: PropsType) => {
               <LinkPreview
                 url={data?.urlList?.[0]?.expanded_url}
                 onLinkPress={onLinkPress}
+                appearanceTheme={appearance}
               />
             </View>
           ) : null}
@@ -91,6 +100,7 @@ export const Twitter = (props: PropsType) => {
                   posterUniqueName={data.quotedTweet.posterUniqueName}
                   posterImageUrl={data.quotedTweet.posterImageUrl}
                   posterDisplayName={data.quotedTweet.posterDisplayName}
+                  appearanceTheme={appearance}
                 />
                 <TwitterText
                   urls={data.quotedTweet.urlList}
@@ -99,6 +109,7 @@ export const Twitter = (props: PropsType) => {
                   quoteUrlId={data.quotedTweet.quoteUrlId}
                   {...{ onHashTagPress, onLinkPress, onUserMentionPress }}
                   styles={styles.quotedContentText}
+                  appearanceTheme={appearance}
                 >
                   {data.quotedTweet.textContent}
                 </TwitterText>
@@ -117,12 +128,7 @@ export const Twitter = (props: PropsType) => {
           <View style={styles.metadataRowContainer}>
             <Image
               source={require("./assets/heart.png")}
-              style={{
-                width: 18,
-                height: 18,
-                tintColor: "rgb(105, 120, 130)",
-                marginRight: 4,
-              }}
+              style={styles.heart}
             />
             <Text style={styles.metadataRowText}>
               {formatLikeNumber(data?.likeNumber) +
@@ -148,72 +154,81 @@ Twitter.defaultProps = {
   cornerRadius: "small",
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    backgroundColor: "white",
-    paddingHorizontal: 20,
-  },
-  topRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
-  },
-  profilePicture: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-  },
-  profileBanner: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-  },
-  displayNameText: {
-    color: "rgb(28, 32, 34)",
-    fontSize: 16,
-    fontWeight: "700",
-  },
-  uniqueNameText: {
-    color: "rgb(105, 120, 130)",
-    fontSize: 14,
-    fontWeight: "400",
-  },
-  nameContainer: {
-    marginLeft: 10,
-    justifyContent: "space-between",
-  },
-  headerSeparator: {
-    height: 12,
-  },
-  mainContentText: {
-    color: "rgb(28, 32, 34)",
-    fontSize: 16,
-    fontWeight: "500",
-    lineHeight: 22,
-  },
-  quotedContentText: {
-    color: "rgb(28, 32, 34)",
-    fontSize: 14,
-    fontWeight: "500",
-    lineHeight: 19,
-  },
-  metadataRowText: {
-    color: "rgb(105, 120, 130)",
-    fontSize: 14,
-    fontWeight: "500",
-  },
-  metadataRowContainer: {
-    marginVertical: 10,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  // @ts-ignore wrong react-native style
-  embedContainer: (cornerRadius: "big" | "small") => ({
-    borderColor: "rgb(204, 214, 221)",
-    borderWidth: 0.7,
-    borderRadius: cornerRadius === "big" ? 12 : 4,
-    marginTop: 10,
-    overflow: "hidden",
-  }),
-});
+const evaluateTheme = (appearance: AppearanceTheme) => {
+  const colors = getTheme(appearance);
+  return StyleSheet.create({
+    container: {
+      width: "100%",
+      backgroundColor: colors.postBackgroundColor,
+      paddingHorizontal: 20,
+    },
+    topRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginTop: 20,
+    },
+    profilePicture: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+    },
+    profileBanner: {
+      flexDirection: "row",
+      alignItems: "center",
+      flex: 1,
+    },
+    displayNameText: {
+      color: colors.mainTextColor,
+      fontSize: 16,
+      fontWeight: "700",
+    },
+    uniqueNameText: {
+      color: colors.grey,
+      fontSize: 14,
+      fontWeight: "400",
+    },
+    nameContainer: {
+      marginLeft: 10,
+      justifyContent: "space-between",
+    },
+    headerSeparator: {
+      height: 12,
+    },
+    mainContentText: {
+      color: colors.mainTextColor,
+      fontSize: 16,
+      fontWeight: "500",
+      lineHeight: 22,
+    },
+    quotedContentText: {
+      color: colors.mainTextColor,
+      fontSize: 14,
+      fontWeight: "500",
+      lineHeight: 19,
+    },
+    metadataRowText: {
+      color: colors.grey,
+      fontSize: 14,
+      fontWeight: "500",
+    },
+    metadataRowContainer: {
+      marginVertical: 10,
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    heart: {
+      tintColor: colors.grey,
+      width: 18,
+      height: 18,
+      marginRight: 4,
+    },
+    // @ts-ignore wrong react-native style
+    embedContainer: (cornerRadius: "big" | "small") => ({
+      borderColor: "rgb(204, 214, 221)",
+      borderWidth: 0.7,
+      borderRadius: cornerRadius === "big" ? 12 : 4,
+      marginTop: 10,
+      overflow: "hidden",
+    }),
+  });
+};

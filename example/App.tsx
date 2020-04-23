@@ -19,15 +19,21 @@ const AuthTwitter = (props) => {
       {...props}
       consumerKey={credentials.consumerKey}
       consumerSecret={credentials.consumerSecret}
+      darkMode
     />
   );
 };
 
 const App = () => {
   return (
-    <View style={{width: '100%', height: '100%', backgroundColor: 'red'}}>
-      <AuthTwitter id={'1251870993628434433'} language={'ru'} />
-      <AuthTwitter id={'1253348918441754625'} language={'ru'} />
+    <View style={{width: '100%', height: '100%'}}>
+      <SafeAreaView />
+      <ScrollView>
+        <AuthTwitter id={'1251870993628434433'} language={'en'} />
+        <AuthTwitter id={'1253446059965190147'} language={'es'} />
+        <AuthTwitter id={'1251918969042358272'} language={'de'} />
+        <AuthTwitter id={'1251918969042358272'} language={'ru'} />
+      </ScrollView>
     </View>
   );
 };

@@ -1,10 +1,13 @@
 import React from "react";
 import { View, Image, Text, TouchableOpacity, Linking } from "react-native";
 import { openGraphTool } from "./OpenGraphParser";
+import { getTheme } from "./theme";
+import { AppearanceTheme } from "./typings";
 
 interface PropsType {
   url: string;
   onLinkPress: (value: string) => any;
+  appearanceTheme: AppearanceTheme;
 }
 
 const getDomain = (url: string) => {
@@ -15,7 +18,7 @@ const getDomain = (url: string) => {
 };
 
 export const LinkPreview = (props: PropsType) => {
-  const { url, onLinkPress } = props;
+  const { url, onLinkPress, appearanceTheme } = props;
   const [data, setData] = React.useState<{
     url: string;
     title?: string;
@@ -23,6 +26,7 @@ export const LinkPreview = (props: PropsType) => {
     description?: string;
   } | null>(null);
 
+  const styles = getTheme(appearanceTheme);
   React.useEffect(() => {
     openGraphTool
       .extractMeta(url)
@@ -52,7 +56,7 @@ export const LinkPreview = (props: PropsType) => {
             <Text
               numberOfLines={1}
               style={{
-                color: "rgb(28, 32, 34)",
+                color: styles.mainTextColor,
                 fontSize: 14,
                 fontWeight: "700",
                 marginBottom: 2,
@@ -65,7 +69,7 @@ export const LinkPreview = (props: PropsType) => {
             <Text
               numberOfLines={2}
               style={{
-                color: "rgb(28, 32, 34)",
+                color: styles.mainTextColor,
                 fontSize: 14,
                 lineHeight: 18,
               }}
@@ -76,7 +80,7 @@ export const LinkPreview = (props: PropsType) => {
           {domain ? (
             <Text
               numberOfLines={1}
-              style={{ color: "rgb(136, 153, 166)", fontSize: 14 }}
+              style={{ color: styles.grey, fontSize: 14 }}
             >
               {domain}
             </Text>

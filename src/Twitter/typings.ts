@@ -223,3 +223,4 @@ export interface TwitterPostApiResponse {
   possibly_sensitive_appealable: boolean;
   lang: string;
 }
+export type AppearanceTheme = "dark" | "light";

@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, StyleSheet, Linking } from "react-native";
-import { UserMention } from "./typings";
+import { UserMention, AppearanceTheme } from "./typings";
+import { getTheme } from "./theme";
 
 interface PropsType {
   children: string;
@@ -20,6 +21,7 @@ interface PropsType {
   onUserMentionPress: (userMention: string) => void;
   onLinkPress: (link: string) => void;
   styles?: any;
+  appearanceTheme: AppearanceTheme;
 }
 
 const transformTextToAddColors = (
@@ -27,7 +29,8 @@ const transformTextToAddColors = (
   searchFor: string,
   replaceBy: string,
   argumentToLinkTo: string,
-  linkTo: (value: string) => any
+  linkTo: (value: string) => any,
+  textColor: string
 ) => {
   if (!searchFor) {
     return textContent;
@@ -72,8 +75,10 @@ export const TwitterText = (props: PropsType) => {
     onHashTagPress,
     onLinkPress,
     onUserMentionPress,
+    appearanceTheme,
   } = props;
   let transformedText = [children];
+  const colors = getTheme(appearanceTheme);
   urls.forEach((url) => {
     if (url.expanded_url.includes(quoteUrlId)) {
       transformedText = transformTextToAddColors(
@@ -81,7 +86,8 @@ export const TwitterText = (props: PropsType) => {
         url.url,
         "",
         url.expanded_url,
-        onLinkPress
+        onLinkPress,
+        colors.postPressableText
       );
     }
     transformedText = transformTextToAddColors(
@@ -89,7 +95,8 @@ export const TwitterText = (props: PropsType) => {
       url.url,
       url.display_url,
       url.expanded_url,
-      onLinkPress
+      onLinkPress,
+      colors.postPressableText
     );
   });
   hashtags.forEach((hashtag) => {
@@ -98,7 +105,8 @@ export const TwitterText = (props: PropsType) => {
       "#" + hashtag.text,
       "#" + hashtag.text,
       hashtag.text,
-      onHashTagPress
+      onHashTagPress,
+      colors.postPressableText
     );
   });
   userMentions.forEach((userMention) => {
@@ -107,7 +115,8 @@ export const TwitterText = (props: PropsType) => {
       "@" + userMention.screen_name,
       "@" + userMention.screen_name,
       userMention.screen_name,
-      onUserMentionPress
+      onUserMentionPress,
+      colors.postPressableText
     );
   });
   return (
