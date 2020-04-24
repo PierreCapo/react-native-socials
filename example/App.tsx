@@ -19,7 +19,6 @@ const AuthTwitter = (props) => {
       {...props}
       consumerKey={credentials.consumerKey}
       consumerSecret={credentials.consumerSecret}
-      darkMode
     />
   );
 };

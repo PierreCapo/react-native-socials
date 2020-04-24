@@ -1,6 +1,12 @@
 # React Native Socials
 
-Javascript library for displaying posts from popular social networks in your react-native app.
+<p align="center">
+<image src="https://github.com/PierreCapo/react-native-socials/raw/master/images/logo_twitter.png" style="margin-right:20px;" />
+<image src="https://github.com/PierreCapo/react-native-socials/raw/master/images/logo_instagram.png" style="margin-right:30px;"/>
+<image src="https://github.com/PierreCapo/react-native-socials/raw/master/images/logo_rn.png" style="margin-left:30px;"/>
+</p>
+<p/>
+<p align="center">Embedding posts from popular social networks in your react-native app.</p>
 
 ## Install
 
@@ -14,9 +20,9 @@ Finally, it is recommended to wrap those components into PureComponent because s
 
 ### Instagram
 
-| Light                                                                                                  | Dark                                                                                                        |
-| ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
-| <image src="https://github.com/PierreCapo/react-native-socials/raw/master/screenshot_instagram.png" /> | <image src="https://github.com/PierreCapo/react-native-socials/raw/master/screenshot_instagram_dark.png" /> |
+| Light                                                                                                         | Dark                                                                                                               |
+| ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| <image src="https://github.com/PierreCapo/react-native-socials/raw/master/images/screenshot_instagram.png" /> | <image src="https://github.com/PierreCapo/react-native-socials/raw/master/images/screenshot_instagram_dark.png" /> |
 
 ```JSX
 import {Instagram} from "react-native-socials";
@@ -34,9 +40,9 @@ Props:
 
 ### Twitter
 
-| Light                                                                                                | Dark                                                                                                      |
-| ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| <image src="https://github.com/PierreCapo/react-native-socials/raw/master/screenshot_twitter.jpg" /> | <image src="https://github.com/PierreCapo/react-native-socials/raw/master/screenshot_twitter_dark.jpg" /> |
+| Light                                                                                                       | Dark                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| <image src="https://github.com/PierreCapo/react-native-socials/raw/master/images/screenshot_twitter.jpg" /> | <image src="https://github.com/PierreCapo/react-native-socials/raw/master/images/screenshot_twitter_dark.jpg" /> |
 
 ```JSX
 import {Twitter} from "react-native-socials";
