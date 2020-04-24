@@ -158,11 +158,6 @@ const evaluateTheme = (appearance: "dark" | "light") => {
     headerSeparator: {
       height: 12,
     },
-    mainContentText: {
-      color: colors.mainTextColor,
-      fontSize: 16,
-      fontWeight: "500",
-    },
     profilePictureBig: {
       width: 42,
       height: 42,

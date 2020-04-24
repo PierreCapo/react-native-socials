@@ -197,19 +197,16 @@ const evaluateTheme = (appearance: AppearanceTheme) => {
     mainContentText: {
       color: colors.mainTextColor,
       fontSize: 16,
-      fontWeight: "500",
       lineHeight: 22,
     },
     quotedContentText: {
       color: colors.mainTextColor,
       fontSize: 14,
-      fontWeight: "500",
       lineHeight: 19,
     },
     metadataRowText: {
       color: colors.grey,
       fontSize: 14,
-      fontWeight: "500",
     },
     metadataRowContainer: {
       marginVertical: 10,
