@@ -1,6 +1,6 @@
 {
   "name": "react-native-socials",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "A react-native library which displays content from popular social networks",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,7 +10,6 @@
     "type": "git",
     "url": "git://github.com/PierreCapo/react-native-socials.git"
   },
-  "prepublish": "tsc --p ./tsconfig.json",
   "dependencies": {
     "@babel/runtime": "^7.9.2",
     "@types/react-native": "^0.62.1",

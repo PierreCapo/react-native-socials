@@ -1,3 +1,5 @@
 example
 node_modules
 dist/example
+images/
+.DS_STORE

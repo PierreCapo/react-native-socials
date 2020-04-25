@@ -46,9 +46,9 @@ export const InstagramVideo = (props: PropsType) => {
             style={{
               opacity: isPaused ? 1 : 0,
               width: 50,
-              height: 50,
             }}
             source={require("./assets/play.png")}
+            resizeMode="contain"
           />
         </View>
       </View>
