@@ -21,6 +21,7 @@ interface PropsType {
   onLinkPress?: (link: string) => void;
   cornerRadius?: "small" | "big";
   darkMode?: boolean;
+  containerBorderRadius: number;
 }
 
 export const Twitter = (props: PropsType) => {
@@ -34,6 +35,7 @@ export const Twitter = (props: PropsType) => {
     consumerSecret,
     cornerRadius,
     darkMode,
+    containerBorderRadius,
   } = props;
   const appearance = darkMode ? "dark" : "light";
   const [data, setData] = React.useState<ITwitterPost | null>(null);
@@ -48,7 +50,7 @@ export const Twitter = (props: PropsType) => {
   const styles = evaluateTheme(appearance);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container(containerBorderRadius)}>
       {data ? (
         <>
           <Header
@@ -152,16 +154,19 @@ export const Twitter = (props: PropsType) => {
 
 Twitter.defaultProps = {
   cornerRadius: "small",
+  borderRadius: 0,
 };
 
 const evaluateTheme = (appearance: AppearanceTheme) => {
   const colors = getTheme(appearance);
   return StyleSheet.create({
-    container: {
+    // @ts-ignore
+    container: (containerBorderRadius: number) => ({
       width: "100%",
       backgroundColor: colors.postBackgroundColor,
       paddingHorizontal: 20,
-    },
+      borderRadius: containerBorderRadius,
+    }),
     topRow: {
       flexDirection: "row",
       justifyContent: "space-between",

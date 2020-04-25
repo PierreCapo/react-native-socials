@@ -17,10 +17,11 @@ interface PropsType {
   id: string;
   language?: LanguageAvailableType;
   darkMode: boolean;
+  containerBorderRadius: number;
 }
 
 export const Instagram = (props: PropsType) => {
-  const { id, language, darkMode } = props;
+  const { id, language, darkMode, containerBorderRadius } = props;
   const [
     instagramPostData,
     setInstagramPostData,
@@ -37,7 +38,7 @@ export const Instagram = (props: PropsType) => {
   const numberOfItems = instagramPostData.content.length;
   const isCarousel = numberOfItems > 1;
   return (
-    <View style={styles.container}>
+    <View style={styles.container(containerBorderRadius)}>
       <View style={styles.header}>
         <Image
           source={{ uri: instagramPostData.ownerPicture }}
@@ -133,15 +134,18 @@ export const Instagram = (props: PropsType) => {
 Instagram.defaultProps = {
   language: "en",
   darkMode: false,
+  borderRadius: 0,
 };
 
 const stylings = (darkMode: boolean) =>
   StyleSheet.create({
-    container: {
+    // @ts-ignore
+    container: (containerBorderRadius: number) => ({
       backgroundColor: darkMode
         ? backgroundColorDarkMode
         : backgroundColorLightMode,
-    },
+      borderRadius: containerBorderRadius,
+    }),
     header: {
       margin: 16,
       flexDirection: "row",
