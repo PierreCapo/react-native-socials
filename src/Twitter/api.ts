@@ -81,6 +81,7 @@ export const adapter = (data: TwitterPostApiResponse): ITwitterPost => {
     );
   });
 
+  // @ts-ignore
   return response;
 };
 

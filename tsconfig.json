@@ -13,6 +13,15 @@
     "importHelpers": true,
     "strict": true,
     "noImplicitReturns": true,
-    "declaration": true
-  }
+    "declaration": true,
+    "types": ["react-native"]
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "example",
+    "**/__tests__/*",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
 }

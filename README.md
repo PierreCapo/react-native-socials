@@ -10,6 +10,8 @@
 
 ## Install
 
+The library is still in version 0, be cautious when you upgrade it! 🚧
+
 ```
 yarn add react-native-socials
 ```
