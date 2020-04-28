@@ -33,16 +33,19 @@ export const Header = (props: PropsType) => {
         <View
           style={{
             flexDirection: "row",
+
             alignItems: "center",
             flex: 1,
           }}
         >
-          <Text style={styles.displayNameText}>{posterDisplayName}</Text>
+          <Text style={styles.displayNameText} numberOfLines={1}>
+            {posterDisplayName}
+          </Text>
           <View
             style={{
-              flex: 1,
               flexDirection: "row",
               alignItems: "center",
+              flexGrow: 1,
               justifyContent: "space-between",
             }}
           >
@@ -59,6 +62,7 @@ export const Header = (props: PropsType) => {
             ) : (
               <View />
             )}
+            <View style={{ minWidth: 8 }} />
             <Image
               source={require("./assets/logo.png")}
               style={{
@@ -94,7 +98,11 @@ export const HeaderQuote = (props: HeaderQuotePropsType) => {
   const styles = evaluateTheme(appearanceTheme);
   return (
     <View
-      style={{ flexDirection: "row", alignItems: "center", marginBottom: 4 }}
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 4,
+      }}
     >
       <Image
         source={{
@@ -139,6 +147,7 @@ const evaluateTheme = (appearance: "dark" | "light") => {
       color: colors.mainTextColor,
       fontSize: 16,
       fontWeight: "700",
+      flexShrink: 1,
     },
     quotedDisplayNameText: {
       color: colors.mainTextColor,

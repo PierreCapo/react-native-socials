@@ -41,9 +41,9 @@ export const adapter = (data: TwitterPostApiResponse): ITwitterPost => {
     quotedTweet: data?.is_quote_status ? adapter(data?.quoted_status) : null,
     quoteUrlId: data?.quoted_status_id_str,
     media: data.extended_entities?.media?.map((element) => {
-      if (element?.type === "video") {
+      if (element?.type === "video" || element?.type === "animated_gif") {
         return {
-          type: element?.type,
+          type: "video",
           aspectRatio:
             element?.video_info?.aspect_ratio?.[0] /
             element?.video_info?.aspect_ratio?.[1],
@@ -53,7 +53,7 @@ export const adapter = (data: TwitterPostApiResponse): ITwitterPost => {
         };
       }
       if (element?.type === "photo") {
-        if (data.extended_entities?.media?.length === 11) {
+        if (data.extended_entities?.media?.length === 1) {
           return {
             type: element?.type,
             aspectRatio: element.sizes.thumb.w / element.sizes.thumb.h,

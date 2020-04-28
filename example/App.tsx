@@ -27,14 +27,42 @@ const App = () => {
   return (
     <View style={{width: '100%', height: '100%'}}>
       <SafeAreaView />
-      <ScrollView>
-        <AuthTwitter id={'1251870993628434433'} language={'en'} />
-        <AuthTwitter id={'1253446059965190147'} language={'es'} />
-        <AuthTwitter id={'1251918969042358272'} language={'de'} />
-        <AuthTwitter id={'1251918969042358272'} language={'ru'} />
+      <ScrollView
+        contentContainerStyle={{backgroundColor: 'white', padding: 16}}>
+        <View style={{paddingVertical: 16}}>
+          <View
+            style={{
+              shadowColor: 'black',
+              shadowOffset: {width: 0, height: 0},
+              shadowOpacity: 0.25,
+              borderRadius: 4,
+            }}>
+            <Instagram id={'Bwjpxgph9DE'} containerBorderRadius={4} />
+          </View>
+        </View>
+        <View style={{paddingVertical: 16}}>
+          <View
+            style={{
+              shadowColor: 'black',
+              shadowOffset: {width: 0, height: 0},
+              shadowOpacity: 0.25,
+              borderRadius: 12,
+              elevation: 2,
+            }}>
+            <AuthTwitter
+              id={'1255068185935720450'}
+              language={'en'}
+              containerBorderRadius={12}
+              onTweetPress={() => null}
+            />
+          </View>
+        </View>
       </ScrollView>
+      <SafeAreaView />
     </View>
   );
 };
-
+// 1000813977318944768
+// 930561247191470082
+// 1000844277847601152
 export default App;

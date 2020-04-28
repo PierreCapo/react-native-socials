@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Image, StyleSheet, Text } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Linking,
+} from "react-native";
 import { getPostData, ITwitterPost } from "./api";
 import { parse, format } from "date-fns";
 import { Header, HeaderQuote } from "./Header";
@@ -22,6 +30,7 @@ interface PropsType {
   cornerRadius?: "small" | "big";
   darkMode?: boolean;
   containerBorderRadius: number;
+  onTweetPress: (tweetId: string) => any;
 }
 
 export const Twitter = (props: PropsType) => {
@@ -36,6 +45,7 @@ export const Twitter = (props: PropsType) => {
     cornerRadius,
     darkMode,
     containerBorderRadius,
+    onTweetPress,
   } = props;
   const appearance = darkMode ? "dark" : "light";
   const [data, setData] = React.useState<ITwitterPost | null>(null);
@@ -50,111 +60,115 @@ export const Twitter = (props: PropsType) => {
   const styles = evaluateTheme(appearance);
 
   return (
-    <View style={styles.container(containerBorderRadius)}>
-      {data ? (
-        <>
-          <Header
-            posterImageUrl={data.posterImageUrl}
-            posterDisplayName={data.posterDisplayName}
-            posterUniqueName={data.posterUniqueName}
-            isPosterVerified={data.isPosterVerified}
-            appearanceTheme={appearance}
-          />
-          <View style={styles.headerSeparator} />
-          <View>
-            <TwitterText
-              styles={styles.mainContentText}
-              urls={data.urlList}
-              hashtags={data.hashtagList}
-              userMentions={data.userMentionList}
-              quoteUrlId={data.quoteUrlId}
+    <TouchableWithoutFeedback onPress={() => onTweetPress(id)}>
+      <View style={styles.container(containerBorderRadius)}>
+        {data ? (
+          <>
+            <Header
+              posterImageUrl={data.posterImageUrl}
+              posterDisplayName={data.posterDisplayName}
+              posterUniqueName={data.posterUniqueName}
+              isPosterVerified={data.isPosterVerified}
               appearanceTheme={appearance}
-            >
-              {data.textContent}
-            </TwitterText>
-          </View>
-          {data?.media?.[0]?.type === "video" ? (
-            <View style={styles.embedContainer(cornerRadius)}>
-              <TwitterVideo
-                source={data.media[0].url}
-                aspectRatio={data.media[0].aspectRatio}
-                poster={data.media[0].posterUrl}
-              />
-            </View>
-          ) : data?.media?.[0]?.type === "photo" ? (
-            <View style={styles.embedContainer(cornerRadius)}>
-              <ImageGallery medias={data.media} />
-            </View>
-          ) : data?.urlList?.[0] && !data?.isQuote ? (
-            <View style={styles.embedContainer(cornerRadius)}>
-              <LinkPreview
-                url={data?.urlList?.[0]?.expanded_url}
-                onLinkPress={onLinkPress}
-                appearanceTheme={appearance}
-              />
-            </View>
-          ) : null}
-          {data?.isQuote ? (
-            <View style={styles.embedContainer(cornerRadius)}>
-              <View style={{ margin: 10 }}>
-                <HeaderQuote
-                  isPosterVerified={data.quotedTweet.isPosterVerified}
-                  posterUniqueName={data.quotedTweet.posterUniqueName}
-                  posterImageUrl={data.quotedTweet.posterImageUrl}
-                  posterDisplayName={data.quotedTweet.posterDisplayName}
-                  appearanceTheme={appearance}
-                />
-                <TwitterText
-                  urls={data.quotedTweet.urlList}
-                  hashtags={data.quotedTweet.hashtagList}
-                  userMentions={data.quotedTweet.userMentionList}
-                  quoteUrlId={data.quotedTweet.quoteUrlId}
-                  {...{ onHashTagPress, onLinkPress, onUserMentionPress }}
-                  styles={styles.quotedContentText}
-                  appearanceTheme={appearance}
-                >
-                  {data.quotedTweet.textContent}
-                </TwitterText>
-              </View>
-              {data?.quotedTweet?.media?.[0]?.type === "video" ? (
-                <TwitterVideo
-                  source={data.quotedTweet.media[0].url}
-                  aspectRatio={data.quotedTweet.media[0].aspectRatio}
-                  poster={data.quotedTweet.media[0].posterUrl}
-                />
-              ) : data?.quotedTweet?.media?.[0]?.type === "photo" ? (
-                <ImageGallery medias={data?.quotedTweet?.media} />
-              ) : null}
-            </View>
-          ) : null}
-          <View style={styles.metadataRowContainer}>
-            <Image
-              source={require("./assets/heart.png")}
-              style={styles.heart}
             />
-            <Text style={styles.metadataRowText}>
-              {formatLikeNumber(data?.likeNumber) +
-                "    " +
-                format(
-                  parse(
-                    data?.createdAt,
-                    "EEE MMM dd HH:mm:ss xx yyyy",
-                    new Date()
-                  ),
-                  getFormattedTimeByLanguage(language).format,
-                  { locale: getFormattedTimeByLanguage(language).locale }
-                )}
-            </Text>
-          </View>
-        </>
-      ) : null}
-    </View>
+            <View style={styles.headerSeparator} />
+            <View>
+              <TwitterText
+                styles={styles.mainContentText}
+                urls={data.urlList}
+                hashtags={data.hashtagList}
+                userMentions={data.userMentionList}
+                quoteUrlId={data.quoteUrlId}
+                appearanceTheme={appearance}
+              >
+                {data.textContent}
+              </TwitterText>
+            </View>
+            {data?.media?.[0]?.type === "video" ? (
+              <View style={styles.embedContainer(cornerRadius)}>
+                <TwitterVideo
+                  source={data.media[0].url}
+                  aspectRatio={data.media[0].aspectRatio}
+                  poster={data.media[0].posterUrl}
+                />
+              </View>
+            ) : data?.media?.[0]?.type === "photo" ? (
+              <View style={styles.embedContainer(cornerRadius)}>
+                <ImageGallery medias={data.media} />
+              </View>
+            ) : data?.urlList?.[0] && !data?.isQuote ? (
+              <View style={styles.embedContainer(cornerRadius)}>
+                <LinkPreview
+                  url={data?.urlList?.[0]?.expanded_url}
+                  onLinkPress={onLinkPress}
+                  appearanceTheme={appearance}
+                />
+              </View>
+            ) : null}
+            {data?.isQuote ? (
+              <View style={styles.embedContainer(cornerRadius)}>
+                <View style={{ margin: 10 }}>
+                  <HeaderQuote
+                    isPosterVerified={data.quotedTweet.isPosterVerified}
+                    posterUniqueName={data.quotedTweet.posterUniqueName}
+                    posterImageUrl={data.quotedTweet.posterImageUrl}
+                    posterDisplayName={data.quotedTweet.posterDisplayName}
+                    appearanceTheme={appearance}
+                  />
+                  <TwitterText
+                    urls={data.quotedTweet.urlList}
+                    hashtags={data.quotedTweet.hashtagList}
+                    userMentions={data.quotedTweet.userMentionList}
+                    quoteUrlId={data.quotedTweet.quoteUrlId}
+                    {...{ onHashTagPress, onLinkPress, onUserMentionPress }}
+                    styles={styles.quotedContentText}
+                    appearanceTheme={appearance}
+                  >
+                    {data.quotedTweet.textContent}
+                  </TwitterText>
+                </View>
+                {data?.quotedTweet?.media?.[0]?.type === "video" ? (
+                  <TwitterVideo
+                    source={data.quotedTweet.media[0].url}
+                    aspectRatio={data.quotedTweet.media[0].aspectRatio}
+                    poster={data.quotedTweet.media[0].posterUrl}
+                  />
+                ) : data?.quotedTweet?.media?.[0]?.type === "photo" ? (
+                  <ImageGallery medias={data?.quotedTweet?.media} />
+                ) : null}
+              </View>
+            ) : null}
+            <View style={styles.metadataRowContainer}>
+              <Image
+                source={require("./assets/heart.png")}
+                style={styles.heart}
+              />
+              <Text style={styles.metadataRowText}>
+                {formatLikeNumber(data?.likeNumber) +
+                  "    " +
+                  format(
+                    parse(
+                      data?.createdAt,
+                      "EEE MMM dd HH:mm:ss xx yyyy",
+                      new Date()
+                    ),
+                    getFormattedTimeByLanguage(language).format,
+                    { locale: getFormattedTimeByLanguage(language).locale }
+                  )}
+              </Text>
+            </View>
+          </>
+        ) : null}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 Twitter.defaultProps = {
   cornerRadius: "small",
   borderRadius: 0,
+  onTweetPress: (tweetId: string) =>
+    Linking.openURL("https://twitter.com/post/status/" + tweetId),
 };
 
 const evaluateTheme = (appearance: AppearanceTheme) => {
