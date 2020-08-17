@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   Linking,
 } from "react-native";
-import { getPostData, ITwitterPost } from "./api";
+import { getPostData, ITwitterPost, adapter } from "./api";
 import { parse, format } from "date-fns";
 import { Header, HeaderQuote } from "./Header";
 import { formatLikeNumber, getFormattedTimeByLanguage } from "./utils";
@@ -31,6 +31,7 @@ interface PropsType {
   darkMode?: boolean;
   containerBorderRadius: number;
   onTweetPress: (tweetId: string) => any;
+  useCustomTweetExtendedData?: any;
 }
 
 export const Twitter = (props: PropsType) => {
@@ -46,13 +47,18 @@ export const Twitter = (props: PropsType) => {
     darkMode,
     containerBorderRadius,
     onTweetPress,
+    useCustomTweetExtendedData,
   } = props;
   const appearance = darkMode ? "dark" : "light";
   const [data, setData] = React.useState<ITwitterPost | null>(null);
   React.useEffect(() => {
-    getPostData(id, consumerKey, consumerSecret).then((response) => {
-      setData(response);
-    });
+    if (!useCustomTweetExtendedData) {
+      getPostData(id, consumerKey, consumerSecret).then((response) => {
+        setData(response);
+      });
+    } else {
+      setData(adapter(useCustomTweetExtendedData));
+    }
   }, [setData]);
   if (!data) {
     return null;
