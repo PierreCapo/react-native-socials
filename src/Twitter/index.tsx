@@ -36,7 +36,6 @@ interface PropsType {
 
 export const Twitter = (props: PropsType) => {
   const {
-    id,
     language,
     onHashTagPress,
     onLinkPress,
@@ -49,6 +48,7 @@ export const Twitter = (props: PropsType) => {
     onTweetPress,
     useCustomTweetExtendedData,
   } = props;
+  var id = props.id;
   const appearance = darkMode ? "dark" : "light";
   const [data, setData] = React.useState<ITwitterPost | null>(null);
   React.useEffect(() => {
@@ -62,6 +62,9 @@ export const Twitter = (props: PropsType) => {
   }, [setData]);
   if (!data) {
     return null;
+  }
+  if (useCustomTweetExtendedData) {
+    id = useCustomTweetExtendedData.id_str;
   }
   const styles = evaluateTheme(appearance);
 
