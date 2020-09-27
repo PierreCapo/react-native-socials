@@ -77,7 +77,7 @@ export const ImageGallery = (props: PropsType) => {
                 flex: 1,
                 width: "100%",
               }}
-              resizeMode={"cover"}
+              resizeMode={"stretch"}
             />
           </TouchableOpacity>
           {medias[3] ? (
@@ -96,7 +96,7 @@ export const ImageGallery = (props: PropsType) => {
                     flex: 1,
                     width: "100%",
                   }}
-                  resizeMode={"cover"}
+                  resizeMode={"stretch"}
                 />
               </TouchableOpacity>
             </>
@@ -119,7 +119,7 @@ export const ImageGallery = (props: PropsType) => {
                     flex: 1,
                     width: "100%",
                   }}
-                  resizeMode={"cover"}
+                  resizeMode={"stretch"}
                 />
               </TouchableOpacity>
               {medias[2] ? (
@@ -138,7 +138,7 @@ export const ImageGallery = (props: PropsType) => {
                         flex: 1,
                         width: "100%",
                       }}
-                      resizeMode={"cover"}
+                      resizeMode={"stretch"}
                     />
                   </TouchableOpacity>
                 </>
@@ -187,6 +187,7 @@ export const ImageGallery = (props: PropsType) => {
                     flex: 1,
                     aspectRatio: element.aspectRatio,
                   }}
+                  resizeMode={"stretch"}
                 />
               ))}
             </ScrollView>
