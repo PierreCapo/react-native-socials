@@ -150,6 +150,12 @@ export const ImageGallery = (props: PropsType) => {
       <Modal
         animationType={"slide"}
         visible={isModalVisible}
+        onRequestClose={() => {
+          setModalState({
+            isModalVisible: false,
+            itemPressed: modalState.itemPressed,
+          });
+        }}
         // no pagesheet type cause of https://github.com/facebook/react-native/issues/26892
       >
         <View
