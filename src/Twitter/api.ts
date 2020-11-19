@@ -53,21 +53,12 @@ export const adapter = (data: TwitterPostApiResponse): ITwitterPost => {
         };
       }
       if (element?.type === "photo") {
-        if (data.extended_entities?.media?.length === 1) {
-          return {
-            type: element?.type,
-            aspectRatio: element.sizes.thumb.w / element.sizes.thumb.h,
-            url: element.media_url_https,
-            twitterShortlink: element?.url,
-          };
-        } else {
-          return {
-            type: element?.type,
-            aspectRatio: element.sizes.small.w / element.sizes.small.h,
-            url: element.media_url_https,
-            twitterShortlink: element?.url,
-          };
-        }
+        return {
+          type: element?.type,
+          aspectRatio: element.sizes.small.w / element.sizes.small.h,
+          url: element.media_url_https,
+          twitterShortlink: element?.url,
+        };
       }
       return null;
     }),
