@@ -61,7 +61,7 @@ const transformTextToAddColors = (
       }
     }
   });
-  return copy.flat(1);
+  return [].concat.apply([], copy);
 };
 
 export const TwitterText = (props: PropsType) => {
