@@ -61,6 +61,7 @@ const transformTextToAddColors = (
       }
     }
   });
+  // @ts-ignore alternative to copy.flat(1)
   return [].concat.apply([], copy);
 };
 
