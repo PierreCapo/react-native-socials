@@ -1,6 +1,8 @@
 import { TwitterPostApiResponse, UserMention } from "./typings";
 import { generateFetchRequestHeaders } from "./generateTwitterHeaders";
+import { Html5Entities } from "html-entities";
 
+const entities = new Html5Entities();
 export const getPostData = async (
   postId: string,
   consumerKey: string,
@@ -33,7 +35,7 @@ export const adapter = (data: TwitterPostApiResponse): ITwitterPost => {
     isPosterVerified: data.user.verified,
     retweetNumber: data.retweet_count,
     likeNumber: data.favorite_count,
-    textContent: data.full_text.replace("&amp;", "&"),
+    textContent: entities.decode(data.full_text),
     isQuote: data?.is_quote_status,
     urlList: data?.entities?.urls,
     hashtagList: data?.entities?.hashtags,
